@@ -53,7 +53,7 @@ export function SentMessagesHistory({ historyData }: SentMessagesHistoryProps) {
               <div className="p-3.5 border rounded-md bg-primary/10 border-primary/30 shadow-inner">
                 <h4 className="font-medium text-sm text-primary/90 mb-1.5 border-b border-border/50 pb-1">Successfully Emailed To:</h4>
                 <div className="history-sent-to-scrollbar">
-                  <ScrollArea className="h-auto max-h-40 mt-1 pr-2"> {/* Increased max-h from 32 to 40 */}
+                  <ScrollArea className="h-auto max-h-45 mt-1 pr-2"> {/* Increased max-h from 32 to 40 */}
                     <ul className="space-y-1">
                       {historyData.sentTo.map(recipient => (
                         <li key={recipient.email} className="text-xs text-foreground/80 p-1.5 bg-primary/5 rounded-sm">
