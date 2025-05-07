@@ -51,17 +51,19 @@ export function SentMessagesHistory({ historyData }: SentMessagesHistoryProps) {
             {historyData.sentTo && historyData.sentTo.length > 0 && (
               <div className="p-3.5 border rounded-md bg-primary/10 border-primary/30 shadow-inner">
                 <h4 className="font-medium text-sm text-primary/90 mb-1.5 border-b border-border/50 pb-1">Successfully Emailed To:</h4>
-                <ScrollArea className="h-auto max-h-32 mt-1 pr-2">
-                  <ul className="space-y-1">
-                    {historyData.sentTo.map(recipient => (
-                      <li key={recipient.email} className="text-xs text-foreground/80 p-1.5 bg-primary/5 rounded-sm">
-                        <span className="font-semibold">{recipient.name}</span> ({recipient.role} - {recipient.department})
-                        <br />
-                        <span className="text-muted-foreground/80">{recipient.email}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </ScrollArea>
+                <div className="history-sent-to-scrollbar">
+                  <ScrollArea className="h-auto max-h-32 mt-1 pr-2">
+                    <ul className="space-y-1">
+                      {historyData.sentTo.map(recipient => (
+                        <li key={recipient.email} className="text-xs text-foreground/80 p-1.5 bg-primary/5 rounded-sm">
+                          <span className="font-semibold">{recipient.name}</span> ({recipient.role} - {recipient.department})
+                          <br />
+                          <span className="text-muted-foreground/80">{recipient.email}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </ScrollArea>
+                </div>
               </div>
             )}
           </div>
@@ -70,4 +72,3 @@ export function SentMessagesHistory({ historyData }: SentMessagesHistoryProps) {
     </Card>
   );
 }
-

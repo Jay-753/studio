@@ -109,3 +109,10 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  /* Custom scrollbar for "Successfully Emailed To" section in history */
+  .history-sent-to-scrollbar [data-radix-scroll-area-thumb] {
+    @apply bg-black; /* Sets thumb to black */
+  }
+}
