@@ -100,37 +100,40 @@ export function EmployeeDirectory({ onEmployeeSelect }: EmployeeDirectoryProps) 
             <p className="text-sm text-center">{searchTerm ? 'No employees match your search.' : 'The employee directory is currently empty.'}</p>
           </div>
         ) : (
-          <ScrollArea className="h-[calc(100vh-450px)] md:h-[calc(100vh-420px)] lg:h-auto lg:max-h-[55vh] pr-3">
-            <Table className="min-w-full">
-              <TableHeader className="sticky top-0 bg-card/80 backdrop-blur-sm z-10">
-                <TableRow>
-                  <TableHead className="w-[25%]"><Users className="inline-block mr-2 h-4 w-4 text-primary" />Name</TableHead>
-                  <TableHead className="w-[25%]"><Briefcase className="inline-block mr-2 h-4 w-4 text-primary" />Role</TableHead>
-                  <TableHead className="w-[25%]"><Building className="inline-block mr-2 h-4 w-4 text-primary" />Department</TableHead>
-                  <TableHead className="w-[25%]"><Mail className="inline-block mr-2 h-4 w-4 text-primary" />Email</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredEmployees.map((employee, index) => (
-                  <TableRow 
-                    key={employee.email} 
-                    onClick={() => handleRowClick(employee.email)}
-                    className="cursor-pointer animate-fade-in opacity-0 hover:bg-muted/50 transition-colors duration-150"
-                    style={{ animationDelay: `${index * 0.05}s`, animationFillMode: 'forwards' }}
-                    tabIndex={0}
-                    onKeyDown={(e) => e.key === 'Enter' && handleRowClick(employee.email)}
-                  >
-                    <TableCell className="font-medium py-3">{employee.name}</TableCell>
-                    <TableCell className="py-3">{employee.role}</TableCell>
-                    <TableCell className="py-3">{employee.department}</TableCell>
-                    <TableCell className="py-3 text-sm">{employee.email}</TableCell>
+          <div className="employee-directory-scrollbar">
+            <ScrollArea className="h-[calc(100vh-450px)] md:h-[calc(100vh-420px)] lg:h-auto lg:max-h-[55vh] pr-2"> {/* Adjusted pr-3 to pr-2 */}
+              <Table className="min-w-full">
+                <TableHeader className="sticky top-0 bg-card/80 backdrop-blur-sm z-10">
+                  <TableRow>
+                    <TableHead className="w-[25%]"><Users className="inline-block mr-2 h-4 w-4 text-primary" />Name</TableHead>
+                    <TableHead className="w-[25%]"><Briefcase className="inline-block mr-2 h-4 w-4 text-primary" />Role</TableHead>
+                    <TableHead className="w-[25%]"><Building className="inline-block mr-2 h-4 w-4 text-primary" />Department</TableHead>
+                    <TableHead className="w-[25%]"><Mail className="inline-block mr-2 h-4 w-4 text-primary" />Email</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </ScrollArea>
+                </TableHeader>
+                <TableBody>
+                  {filteredEmployees.map((employee, index) => (
+                    <TableRow 
+                      key={employee.email} 
+                      onClick={() => handleRowClick(employee.email)}
+                      className="cursor-pointer animate-fade-in opacity-0 hover:bg-muted/50 transition-colors duration-150"
+                      style={{ animationDelay: `${index * 0.05}s`, animationFillMode: 'forwards' }}
+                      tabIndex={0}
+                      onKeyDown={(e) => e.key === 'Enter' && handleRowClick(employee.email)}
+                    >
+                      <TableCell className="font-medium py-3">{employee.name}</TableCell>
+                      <TableCell className="py-3">{employee.role}</TableCell>
+                      <TableCell className="py-3">{employee.department}</TableCell>
+                      <TableCell className="py-3 text-sm">{employee.email}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </ScrollArea>
+          </div>
         )}
       </CardContent>
     </Card>
   );
 }
+

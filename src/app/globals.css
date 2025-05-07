@@ -118,4 +118,12 @@
   .history-sent-to-scrollbar [data-radix-scroll-area-thumb] {
     @apply bg-black rounded-lg; /* Explicitly black thumb */
   }
+
+  /* Custom scrollbar for Employee Directory table */
+  .employee-directory-scrollbar [data-radix-scroll-area-scrollbar][data-orientation="vertical"] {
+    @apply bg-muted-foreground/20 rounded-lg; /* Light, slightly transparent track */
+  }
+  .employee-directory-scrollbar [data-radix-scroll-area-thumb] {
+    @apply bg-black rounded-lg; /* Explicitly black thumb */
+  }
 }
