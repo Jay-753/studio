@@ -14,7 +14,7 @@ export function SentMessagesHistory({ historyData }: SentMessagesHistoryProps) {
     <Card className="w-full shadow-xl rounded-lg border border-border/50 hover:shadow-2xl hover:scale-[1.01] transition-all duration-300 ease-in-out">
       <CardHeader>
         <CardTitle className="text-xl font-semibold text-primary">Sent Messages History</CardTitle>
-        <CardDescription>Details of the last voice command processed.</CardDescription>
+        <CardDescription>Details of the command processed.</CardDescription>
       </CardHeader>
       <CardContent>
         {!historyData || (!historyData.message && !historyData.sentTo?.length && !historyData.extractedRole && !historyData.extractedCoreMessage && !historyData.composedEmailBodyPreview) ? (

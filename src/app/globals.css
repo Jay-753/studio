@@ -112,7 +112,10 @@
 
 @layer components {
   /* Custom scrollbar for "Successfully Emailed To" section in history */
+  .history-sent-to-scrollbar [data-radix-scroll-area-scrollbar][data-orientation="vertical"] {
+    @apply bg-muted-foreground/20 rounded-lg; /* Light, slightly transparent track */
+  }
   .history-sent-to-scrollbar [data-radix-scroll-area-thumb] {
-    @apply bg-black; /* Sets thumb to black */
+    @apply bg-black rounded-lg; /* Explicitly black thumb */
   }
 }
