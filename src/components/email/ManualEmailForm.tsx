@@ -1,6 +1,7 @@
+
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import { Mail, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -13,6 +14,11 @@ import { useToast } from '@/hooks/use-toast';
 import { LoadingDots } from '@/components/ui/LoadingDots';
 
 const initialManualEmailState: SendManualEmailResult | null = null;
+
+interface ManualEmailFormProps {
+  initialToEmail?: string | null;
+  onEmailSent?: () => void;
+}
 
 function ManualSubmitButton() {
   const { pending } = useFormStatus();
@@ -36,10 +42,21 @@ function ManualSubmitButton() {
   );
 }
 
-export function ManualEmailForm() {
+export function ManualEmailForm({ initialToEmail, onEmailSent }: ManualEmailFormProps) {
   const [state, formAction] = useFormState(sendManualEmailAction, initialManualEmailState);
   const { toast } = useToast();
   const formRef = useRef<HTMLFormElement>(null);
+  const [toFieldValue, setToFieldValue] = useState('');
+  const [subjectFieldValue, setSubjectFieldValue] = useState('');
+  const [bodyFieldValue, setBodyFieldValue] = useState('');
+
+  useEffect(() => {
+    if (initialToEmail) {
+      setToFieldValue(initialToEmail);
+      // Optionally focus next field
+      // document.getElementById('subject')?.focus();
+    }
+  }, [initialToEmail]);
 
   useEffect(() => {
     if (state) {
@@ -49,7 +66,13 @@ export function ManualEmailForm() {
           description: state.message,
           variant: 'default',
         });
-        formRef.current?.reset();
+        formRef.current?.reset(); // Resets native form elements
+        setToFieldValue('');      // Clear controlled state
+        setSubjectFieldValue(''); // Clear controlled state
+        setBodyFieldValue('');    // Clear controlled state
+        if (onEmailSent) {
+          onEmailSent();
+        }
       } else {
         toast({
           title: 'Error',
@@ -58,7 +81,7 @@ export function ManualEmailForm() {
         });
       }
     }
-  }, [state, toast]);
+  }, [state, toast, onEmailSent]);
 
   return (
     <Card className="w-full shadow-xl rounded-lg border border-border/50 hover:shadow-2xl hover:scale-[1.01] transition-all duration-300 ease-in-out">
@@ -68,7 +91,7 @@ export function ManualEmailForm() {
           Manual Email
         </CardTitle>
         <CardDescription>
-          Compose and send an email directly.
+          Compose and send an email directly. Select an employee from the directory to pre-fill the recipient.
         </CardDescription>
       </CardHeader>
       <form action={formAction} ref={formRef}>
@@ -81,6 +104,8 @@ export function ManualEmailForm() {
               type="email"
               placeholder="recipient@example.com"
               required
+              value={toFieldValue}
+              onChange={(e) => setToFieldValue(e.target.value)}
               className="text-base bg-input border-border/70 focus:border-accent/70 focus:ring-2 focus:ring-accent/70"
             />
           </div>
@@ -91,6 +116,8 @@ export function ManualEmailForm() {
               name="subject"
               placeholder="Email Subject"
               required
+              value={subjectFieldValue}
+              onChange={(e) => setSubjectFieldValue(e.target.value)}
               className="text-base bg-input border-border/70 focus:border-accent/70 focus:ring-2 focus:ring-accent/70"
             />
           </div>
@@ -102,6 +129,8 @@ export function ManualEmailForm() {
               placeholder="Compose your email..."
               rows={5}
               required
+              value={bodyFieldValue}
+              onChange={(e) => setBodyFieldValue(e.target.value)}
               className="text-base bg-input border-border/70 focus:border-accent/70 focus:ring-2 focus:ring-accent/70"
             />
           </div>

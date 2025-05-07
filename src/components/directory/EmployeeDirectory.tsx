@@ -1,27 +1,31 @@
 
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import type { Employee } from '@/services/email';
 import { getEmployees } from '@/services/email';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Skeleton } from '@/components/ui/skeleton';
-import { AlertTriangle, Users, Briefcase, Mail, Building } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { AlertTriangle, Users, Briefcase, Mail, Building, Search as SearchIcon } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
-export function EmployeeDirectory() {
+interface EmployeeDirectoryProps {
+  onEmployeeSelect: (email: string) => void;
+}
+
+export function EmployeeDirectory({ onEmployeeSelect }: EmployeeDirectoryProps) {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     async function fetchEmployees() {
       try {
         setIsLoading(true);
         setError(null);
-        // Simulate network delay for skeleton visibility
-        // await new Promise(resolve => setTimeout(resolve, 1500)); 
         const data = await getEmployees();
         setEmployees(data);
       } catch (err) {
@@ -34,6 +38,22 @@ export function EmployeeDirectory() {
     fetchEmployees();
   }, []);
 
+  const filteredEmployees = useMemo(() => {
+    const term = searchTerm.trim().toLowerCase();
+    if (!term) return employees;
+    return employees.filter(
+      (employee) =>
+        employee.name.toLowerCase().includes(term) ||
+        employee.role.toLowerCase().includes(term) ||
+        employee.department.toLowerCase().includes(term) ||
+        employee.email.toLowerCase().includes(term)
+    );
+  }, [employees, searchTerm]);
+
+  const handleRowClick = (email: string) => {
+    onEmployeeSelect(email);
+  };
+
   return (
     <Card className="w-full shadow-xl rounded-lg border border-border/50 hover:shadow-2xl hover:scale-[1.005] transition-all duration-300 ease-in-out animate-slide-in-up opacity-0" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
       <CardHeader>
@@ -41,9 +61,20 @@ export function EmployeeDirectory() {
           <Users className="mr-3 h-6 w-6 text-primary" />
           Employee Directory
         </CardTitle>
-        <CardDescription>Browse company employees and their roles.</CardDescription>
+        <CardDescription>Browse and search company employees. Click a row to email an employee.</CardDescription>
       </CardHeader>
       <CardContent>
+        <div className="mb-4 relative">
+          <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+          <Input
+            type="search"
+            placeholder="Search by name, role, department, or email..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10 w-full bg-input border-border/70 focus:border-accent/70 focus:ring-2 focus:ring-accent/70"
+          />
+        </div>
+
         {isLoading ? (
           <div className="space-y-4">
             {[...Array(5)].map((_, i) => (
@@ -62,14 +93,14 @@ export function EmployeeDirectory() {
             <p className="text-lg font-medium">Error Loading Employees</p>
             <p className="text-sm text-center">{error}</p>
           </div>
-        ) : employees.length === 0 ? (
+        ) : filteredEmployees.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-48 text-muted-foreground p-4 bg-muted/20 border border-border/30 rounded-md">
             <Users className="h-10 w-10 mb-3" />
             <p className="text-lg font-medium">No Employees Found</p>
-            <p className="text-sm text-center">The employee directory is currently empty.</p>
+            <p className="text-sm text-center">{searchTerm ? 'No employees match your search.' : 'The employee directory is currently empty.'}</p>
           </div>
         ) : (
-          <ScrollArea className="h-[calc(100vh-380px)] md:h-[calc(100vh-350px)] lg:h-auto lg:max-h-[60vh] pr-3">
+          <ScrollArea className="h-[calc(100vh-450px)] md:h-[calc(100vh-420px)] lg:h-auto lg:max-h-[55vh] pr-3">
             <Table className="min-w-full">
               <TableHeader className="sticky top-0 bg-card/80 backdrop-blur-sm z-10">
                 <TableRow>
@@ -80,11 +111,14 @@ export function EmployeeDirectory() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {employees.map((employee, index) => (
+                {filteredEmployees.map((employee, index) => (
                   <TableRow 
                     key={employee.email} 
-                    className="animate-fade-in opacity-0 hover:bg-muted/30 transition-colors duration-150"
-                    style={{ animationDelay: `${index * 0.07}s`, animationFillMode: 'forwards' }}
+                    onClick={() => handleRowClick(employee.email)}
+                    className="cursor-pointer animate-fade-in opacity-0 hover:bg-muted/50 transition-colors duration-150"
+                    style={{ animationDelay: `${index * 0.05}s`, animationFillMode: 'forwards' }}
+                    tabIndex={0}
+                    onKeyDown={(e) => e.key === 'Enter' && handleRowClick(employee.email)}
                   >
                     <TableCell className="font-medium py-3">{employee.name}</TableCell>
                     <TableCell className="py-3">{employee.role}</TableCell>

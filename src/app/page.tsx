@@ -1,6 +1,7 @@
 
 'use client';
 
+import { useState } from 'react';
 import { useFormState } from 'react-dom';
 import { AppHeader } from '@/components/layout/Header';
 import { VoicePromptForm } from '@/components/voice/VoicePromptForm';
@@ -15,12 +16,23 @@ const initialVoiceCommandState: ProcessVoiceCommandResult | null = null;
 
 export default function ZoroAssistantPage() {
   const [voiceCommandState, voiceCommandFormAction] = useFormState(processVoiceCommandAction, initialVoiceCommandState);
+  const [selectedEmailForManualForm, setSelectedEmailForManualForm] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<string>('assistant');
+
+  const handleEmployeeSelect = (email: string) => {
+    setSelectedEmailForManualForm(email);
+    setActiveTab('assistant'); // Switch to assistant tab to show the manual email form
+    // Scroll to manual email form can be added here if needed
+    // setTimeout(() => {
+    //   document.getElementById('manual-email-form-card')?.scrollIntoView({ behavior: 'smooth' });
+    // }, 100);
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <AppHeader />
       <main className="flex-grow container mx-auto p-4 md:p-8">
-        <Tabs defaultValue="assistant" className="w-full">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-2 md:w-auto md:inline-flex md:mx-0 mb-6 bg-muted border border-border/50 shadow-md rounded-lg p-1">
             <TabsTrigger 
               value="assistant" 
@@ -51,16 +63,17 @@ export default function ZoroAssistantPage() {
 
               {/* Right Column */}
               <div 
+                id="manual-email-form-card"
                 className="space-y-6 animate-slide-in-up opacity-0" 
                 style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}
               >
-                <ManualEmailForm />
+                <ManualEmailForm initialToEmail={selectedEmailForManualForm} onEmailSent={() => setSelectedEmailForManualForm(null)} />
               </div>
             </div>
           </TabsContent>
           
           <TabsContent value="directory" className="focus-visible:ring-0 focus-visible:ring-offset-0">
-            <EmployeeDirectory />
+            <EmployeeDirectory onEmployeeSelect={handleEmployeeSelect} />
           </TabsContent>
         </Tabs>
       </main>
