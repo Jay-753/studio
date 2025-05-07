@@ -4,96 +4,100 @@
 
 @layer base {
   :root {
-    /* Fallback light theme variables, dark mode is default */
-    --background: 240 67% 94%; 
-    --foreground: 271 60% 25%;
+    /* Light Theme: Predominantly light lavenders and violets */
+    --background: 270 80% 97%; /* Very light, almost white, lavender */
+    --foreground: 270 40% 15%; /* Very dark purple */
 
-    --card: 0 0% 100%;
-    --card-foreground: 271 60% 25%;
+    --card: 0 0% 100%; /* White */
+    --card-foreground: 270 40% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 271 60% 25%;
+    --popover: 0 0% 100%; /* White */
+    --popover-foreground: 270 40% 15%;
 
-    --primary: 180 65% 45%; /* Darker Teal */
+    --primary: 271 76% 53%; /* Violet (#8A2BE2) */
     --primary-foreground: 0 0% 100%; /* White */
 
-    --secondary: 270 40% 80%; 
-    --secondary-foreground: 270 60% 30%;
+    --secondary: 270 70% 90%; /* Light lavender */
+    --secondary-foreground: 270 50% 40%; /* Medium purple */
 
-    --muted: 240 50% 90%;
-    --muted-foreground: 270 40% 45%;
+    --muted: 270 70% 94%; /* Very light muted lavender */
+    --muted-foreground: 270 40% 60%; /* Medium-light muted purple */
 
-    --accent: 264 70% 70%; /* Lighter Purple for accents */
+    --accent: 271 70% 65%; /* Vibrant lighter purple */
     --accent-foreground: 0 0% 100%; /* White */
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 270 50% 85%;
-    --input: 0 0% 100%; 
-    --ring: 264 70% 70%; /* Purple for focus rings, matches accent */
+    --border: 270 50% 88%; /* Light purple border */
+    --input: 0 0% 100%; /* White inputs */
+    --ring: 271 70% 65%; /* Matches accent */
 
     --radius: 0.5rem;
 
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --chart-1: 271 70% 50%;
+    --chart-2: 271 60% 60%;
+    --chart-3: 271 50% 70%;
+    --chart-4: 271 80% 55%;
+    --chart-5: 271 75% 65%;
 
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 264 70% 70%;
+    /* Light Theme Sidebar */
+    --sidebar-background: 270 60% 94%; /* Light lavender, distinct from page bg */
+    --sidebar-foreground: 270 40% 15%;
+    --sidebar-primary: 271 70% 65%; /* Accent purple */
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 180 65% 55%;
+    --sidebar-accent: 271 76% 53%; /* Primary purple (Violet) */
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 180 65% 55%;
+    --sidebar-border: 270 50% 85%;
+    --sidebar-ring: 271 70% 65%;
   }
 
   .dark {
-    --background: 264 30% 9%; /* Deep Indigo/Purple */
-    --foreground: 255 50% 90%; /* Light Lavender */
+    /* Dark Theme: "Black - PurpleViolet" */
+    --background: 270 20% 5%; /* Very dark purple, appears almost black */
+    --foreground: 270 50% 90%; /* Light lavender/violet */
 
-    --card: 264 30% 14%; /* Slightly Lighter Deep Indigo for Cards */
-    --card-foreground: 255 50% 90%;
+    --card: 270 20% 9%; /* Slightly lighter than background, dark purple */
+    --card-foreground: 270 50% 90%;
 
-    --popover: 264 30% 12%;
-    --popover-foreground: 255 50% 90%;
+    --popover: 270 20% 8%; /* Similar to card, dark purple */
+    --popover-foreground: 270 50% 90%;
 
-    --primary: 180 65% 45%; /* Darker Teal */
+    --primary: 271 76% 53%; /* Violet (#8A2BE2) - strong purpleviolet */
     --primary-foreground: 0 0% 100%; /* White */
 
-    --secondary: 264 40% 35%; /* Muted Deeper Purple */
-    --secondary-foreground: 255 50% 90%;
+    --secondary: 270 30% 30%; /* Muted darker purple */
+    --secondary-foreground: 270 40% 85%; /* Lighter purple for secondary text */
 
-    --muted: 264 30% 22%;
-    --muted-foreground: 255 40% 75%;
+    --muted: 270 20% 20%; /* Dark, desaturated purple for muted elements */
+    --muted-foreground: 270 30% 70%; /* Lighter muted purple for muted text */
 
-    --accent: 264 70% 70%; /* Lighter Purple for Accents (Mic, Voice Send Button) */
+    --accent: 271 70% 65%; /* Vibrant, slightly lighter purple than primary */
     --accent-foreground: 0 0% 100%; /* White */
 
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 62.8% 30.6%; /* Keeping a standard destructive red */
     --destructive-foreground: 0 0% 98%;
 
-    --border: 264 30% 25%; 
-    --input: 264 30% 12%; /* Input background, similar to popover */
-    --ring: 264 70% 70%; /* Purple for focus rings, matches accent */
+    --border: 270 20% 25%; /* Subtle dark purple border */
+    --input: 270 20% 10%; /* Dark purple input background */
+    --ring: 271 70% 65%; /* Matches new accent for focus rings */
 
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    /* Chart colors for dark theme, purple-based */
+    --chart-1: 271 70% 50%;
+    --chart-2: 271 60% 60%;
+    --chart-3: 271 50% 70%;
+    --chart-4: 271 80% 55%;
+    --chart-5: 271 75% 65%;
 
-    --sidebar-background: 264 30% 11%;
-    --sidebar-foreground: 255 50% 90%;
-    --sidebar-primary: 264 70% 70%;
+    /* Dark Theme Sidebar */
+    --sidebar-background: 270 20% 7%; /* Consistent dark purple for sidebar */
+    --sidebar-foreground: 270 50% 90%;
+    --sidebar-primary: 271 70% 65%; /* Matches new accent */
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 180 65% 45%; /* Darker Teal */
+    --sidebar-accent: 271 76% 53%; /* Matches new primary (Violet) */
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 264 30% 20%;
-    --sidebar-ring: 264 70% 70%; /* Purple */
+    --sidebar-border: 270 20% 18%;
+    --sidebar-ring: 271 70% 65%; /* Matches new accent */
   }
 }
 
