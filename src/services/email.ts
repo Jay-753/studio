@@ -20,6 +20,8 @@ export interface Employee {
   department: string;
 }
 
+const SENDER_EMAIL = 'myzoroai@gmail.com';
+
 /**
  * Sends an email to the specified recipient with the given subject and body.
  *
@@ -35,7 +37,7 @@ export async function sendEmail(
 ): Promise<void> {
   // TODO: Implement this by calling an email API.
   console.log(
-    `Sending email to ${recipient} with subject '${subject}' and body:\n${body}`
+    `Sending email from ${SENDER_EMAIL} to ${recipient} with subject '${subject}' and body:\n${body}`
   );
 }
 
@@ -139,4 +141,3 @@ export async function getEmployees(): Promise<Employee[]> {
     },
   ];
 }
-
