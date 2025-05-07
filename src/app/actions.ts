@@ -8,7 +8,8 @@ export interface ProcessPromptResult {
   message: string;
   sentTo?: { name: string; email: string; role: string, department: string }[];
   extractedRole?: string;
-  extractedMessage?: string;
+  extractedCoreMessage?: string; // Renamed from extractedMessage, now for subject
+  composedEmailBodyPreview?: string; // New: for the full AI composed email body
 }
 
 export async function processAndSendEmailAction(
@@ -25,11 +26,14 @@ export async function processAndSendEmailAction(
     const aiInput: ExtractEmailDetailsInput = { voicePrompt: prompt };
     const extractedDetails = await extractEmailDetails(aiInput);
     
-    if (!extractedDetails || !extractedDetails.role || !extractedDetails.message) {
-      return { success: false, message: 'AI could not extract role or message from the prompt.' };
+    if (!extractedDetails || !extractedDetails.role || !extractedDetails.coreMessage || !extractedDetails.emailBody) {
+      return { 
+        success: false, 
+        message: 'AI could not extract role, core message, or compose email body from the prompt.' 
+      };
     }
 
-    const { role: extractedRole, message: extractedUserMessage } = extractedDetails;
+    const { role: extractedRole, coreMessage: extractedCoreMessage, emailBody: composedEmailBody } = extractedDetails;
 
     const employees = await getEmployees();
     const targetEmployees = employees.filter(emp => 
@@ -41,18 +45,18 @@ export async function processAndSendEmailAction(
         success: false, 
         message: `No employees found with the role: ${extractedRole}.`,
         extractedRole,
-        extractedMessage: extractedUserMessage
+        extractedCoreMessage,
+        composedEmailBodyPreview: composedEmailBody 
       };
     }
 
-    const emailSubject = `Action Required: ${extractedUserMessage.substring(0,30)}${extractedUserMessage.length > 30 ? '...' : ''}`;
+    const emailSubject = `Action Required: ${extractedCoreMessage.substring(0,30)}${extractedCoreMessage.length > 30 ? '...' : ''}`;
     
     const sentToDetails: ProcessPromptResult['sentTo'] = [];
 
     for (const employee of targetEmployees) {
-      const emailBody = `Respected ${employee.name},\n\n${extractedUserMessage}\n\nThank you!\nBest regards,\nZoro Assistant`;
-      // Simulate sending email
-      await sendEmail(employee.email, emailSubject, emailBody);
+      // Use the AI-composed email body directly
+      await sendEmail(employee.email, emailSubject, composedEmailBody);
       sentToDetails.push({ name: employee.name, email: employee.email, role: employee.role, department: employee.department });
     }
     
@@ -62,11 +66,23 @@ export async function processAndSendEmailAction(
       message: `Email successfully sent to: ${recipientNames}.`,
       sentTo: sentToDetails,
       extractedRole,
-      extractedMessage: extractedUserMessage
+      extractedCoreMessage,
+      composedEmailBodyPreview: composedEmailBody
     };
 
   } catch (error) {
     console.error('Error processing prompt:', error);
-    return { success: false, message: `An error occurred: ${error instanceof Error ? error.message : String(error)}` };
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    // Attempt to return extracted details if available even on error
+    // This part depends on whether `extractedDetails` would be available in catch block scope and if it's populated
+    // For now, keeping it simple, but could be enhanced.
+    return { 
+        success: false, 
+        message: `An error occurred: ${errorMessage}` 
+        // Potentially include partial extracted data if error happens after AI call
+        // extractedRole: extractedDetails?.role, 
+        // extractedCoreMessage: extractedDetails?.coreMessage,
+        // composedEmailBodyPreview: extractedDetails?.emailBody
+    };
   }
 }

@@ -69,7 +69,7 @@ export function EmailForm() {
           Voice Prompt Command
         </CardTitle>
         <CardDescription>
-          Enter your command (e.g., "Ask the manager to submit project files"). Zoro will extract the role and message, then send an email.
+          Enter your command (e.g., "Ask the manager to submit project files"). Zoro will extract details, compose an email, and send it.
         </CardDescription>
       </CardHeader>
       <form action={formAction} ref={formRef}>
@@ -88,17 +88,19 @@ export function EmailForm() {
             />
           </div>
 
-          {state && (state.extractedRole || state.extractedMessage) && (
+          {state && (state.extractedRole || state.extractedCoreMessage || state.composedEmailBodyPreview) && !state.success && (
             <div className="p-4 border rounded-md bg-muted/50 space-y-2">
-              <h4 className="font-semibold text-sm text-foreground">Extracted Details:</h4>
+              <h4 className="font-semibold text-sm text-foreground">Extracted / Composed Details:</h4>
               {state.extractedRole && <p className="text-xs"><span className="font-medium">Target Role:</span> {state.extractedRole}</p>}
-              {state.extractedMessage && <p className="text-xs"><span className="font-medium">Message:</span> {state.extractedMessage}</p>}
+              {state.extractedCoreMessage && <p className="text-xs"><span className="font-medium">Core Message (for subject):</span> {state.extractedCoreMessage}</p>}
+              {state.composedEmailBodyPreview && <p className="text-xs whitespace-pre-line"><span className="font-medium">Composed Email Body:</span> {state.composedEmailBodyPreview}</p>}
             </div>
           )}
           
           {state?.sentTo && state.sentTo.length > 0 && (
             <div className="p-4 border rounded-md bg-green-50 border-green-200">
               <h4 className="font-semibold text-sm text-green-700">Successfully Emailed:</h4>
+               {state.extractedCoreMessage && <p className="text-xs text-green-600"><span className="font-medium">Regarding:</span> {state.extractedCoreMessage}</p>}
               <ScrollArea className="h-24 mt-1">
                 <ul className="list-disc list-inside text-xs text-green-600 space-y-1">
                   {state.sentTo.map(recipient => (
@@ -108,6 +110,7 @@ export function EmailForm() {
                   ))}
                 </ul>
               </ScrollArea>
+               {state.composedEmailBodyPreview && <p className="text-xs mt-2 whitespace-pre-line text-gray-500"><span className="font-medium">Sent Body:</span> {state.composedEmailBodyPreview}</p>}
             </div>
           )}
 
