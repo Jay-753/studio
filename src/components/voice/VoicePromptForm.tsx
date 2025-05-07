@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
@@ -35,6 +36,8 @@ function SubmitButton() {
 
 export function VoicePromptForm({ formAction, currentPromptValue }: VoicePromptFormProps) {
   const formRef = useRef<HTMLFormElement>(null);
+  // Initialize local prompt state with currentPromptValue.
+  // This ensures that if the parent provides an initial value (e.g. on error recovery), it's used.
   const [prompt, setPrompt] = useState(currentPromptValue || '');
   const { toast } = useToast();
 
@@ -42,9 +45,8 @@ export function VoicePromptForm({ formAction, currentPromptValue }: VoicePromptF
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const [isSpeechApiSupported, setIsSpeechApiSupported] = useState(false);
 
+  // Effect for setting up Speech Recognition API
   useEffect(() => {
-    // Check for SpeechRecognition API support on component mount
-    // Ensure this runs only on the client
     if (typeof window !== 'undefined') {
       const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (SpeechRecognitionAPI) {
@@ -64,7 +66,7 @@ export function VoicePromptForm({ formAction, currentPromptValue }: VoicePromptF
 
         recognition.onresult = (event) => {
           const transcript = event.results[0][0].transcript;
-          setPrompt(transcript);
+          setPrompt(transcript); // Update local prompt state with speech result
         };
 
         recognition.onerror = (event) => {
@@ -78,7 +80,7 @@ export function VoicePromptForm({ formAction, currentPromptValue }: VoicePromptF
             errorMessage = 'Microphone access denied. Please enable it in your browser settings.';
           }
           toast({ variant: 'destructive', title: 'Voice Error', description: errorMessage });
-          setIsListening(false); // Ensure listening state is reset on error
+          setIsListening(false);
         };
 
         recognition.onend = () => {
@@ -89,9 +91,7 @@ export function VoicePromptForm({ formAction, currentPromptValue }: VoicePromptF
       }
     }
 
-
     return () => {
-      // Cleanup: stop recognition if active
       if (recognitionRef.current && typeof recognitionRef.current.stop === 'function') {
         try {
           recognitionRef.current.stop();
@@ -100,20 +100,29 @@ export function VoicePromptForm({ formAction, currentPromptValue }: VoicePromptF
         }
       }
     };
-  }, [toast]); // Effect runs once on mount (assuming toast is stable)
+  }, [toast]); // toast is stable, so this effect runs once on mount.
 
+  // Effect to synchronize local `prompt` state with `currentPromptValue` from parent.
+  // This handles cases like form reset (parent sets currentPromptValue to '')
+  // or when the parent provides a new value (e.g., error recovery).
   useEffect(() => {
-    // Handle external changes to currentPromptValue (e.g., form reset)
-    if (currentPromptValue === '') {
-      setPrompt('');
-      if (isListening && recognitionRef.current) {
-        recognitionRef.current.stop();
-      }
-    } else if (currentPromptValue !== undefined && currentPromptValue !== prompt) {
-      // Sync if currentPromptValue is different and not undefined
-      setPrompt(currentPromptValue);
+    const parentValue = currentPromptValue || '';
+    if (prompt !== parentValue) {
+      setPrompt(parentValue);
     }
-  }, [currentPromptValue, isListening, prompt]);
+
+    // If the parent cleared the prompt (e.g., after successful submission)
+    // and the microphone was listening, stop listening.
+    if (parentValue === '' && isListening && recognitionRef.current && typeof recognitionRef.current.stop === 'function') {
+      try {
+        recognitionRef.current.stop();
+      } catch (e) { /* ignore */ }
+    }
+  // Only run this effect if currentPromptValue from the parent changes.
+  // isListening is read here but should not trigger re-sync if it's the only thing changing.
+  // Adding isListening to dependency array to satisfy exhaustive-deps,
+  // but the core logic is driven by currentPromptValue changes.
+  }, [currentPromptValue, isListening]);
 
 
   const handleToggleListening = () => {
@@ -127,6 +136,8 @@ export function VoicePromptForm({ formAction, currentPromptValue }: VoicePromptF
       recognition.stop();
     } else {
       try {
+        // Clear previous prompt before starting new recognition
+        // setPrompt(''); // Optional: clear prompt on new listen start
         recognition.start();
       } catch (e) {
         console.error("Error calling recognition.start():", e);
@@ -139,7 +150,12 @@ export function VoicePromptForm({ formAction, currentPromptValue }: VoicePromptF
   return (
     <form
       ref={formRef}
-      action={formAction}
+      action={(formData) => {
+        // Ensure the form uses the latest `prompt` state for submission
+        // This is important if `prompt` is updated by speech after initial `currentPromptValue`
+        formData.set('prompt', prompt);
+        formAction(formData);
+      }}
       className="space-y-3"
     >
       <Label htmlFor="prompt" className="sr-only">Your Command</Label>
@@ -167,16 +183,16 @@ export function VoicePromptForm({ formAction, currentPromptValue }: VoicePromptF
         </Button>
         <Input
           id="prompt"
-          name="prompt"
+          name="prompt" // Name attribute is still important for FormData on submit if JS fails or for non-JS scenarios
           placeholder={isListening ? "Listening..." : "Type or say your command"}
           required
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
+          value={prompt} // Controlled component using local `prompt` state
+          onChange={(e) => setPrompt(e.target.value)} // Update local `prompt` state on typing
           className="flex-grow bg-transparent border-0 focus:ring-0 focus:outline-none text-base placeholder:text-muted-foreground h-10 px-2"
         />
         <SubmitButton />
       </div>
-      {typeof window !== 'undefined' && !isSpeechApiSupported && ( // Conditionally render only on client
+      {typeof window !== 'undefined' && !isSpeechApiSupported && (
         <p className="text-xs text-muted-foreground text-center pt-1">
           Voice input is not supported by your browser. You can still type commands.
         </p>
@@ -184,3 +200,4 @@ export function VoicePromptForm({ formAction, currentPromptValue }: VoicePromptF
     </form>
   );
 }
+
