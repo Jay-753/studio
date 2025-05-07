@@ -37,8 +37,8 @@ export function EmployeeDirectory() {
   return (
     <Card className="w-full shadow-xl rounded-lg border border-border/50 hover:shadow-2xl hover:scale-[1.005] transition-all duration-300 ease-in-out animate-slide-in-up opacity-0" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
       <CardHeader>
-        <CardTitle className="flex items-center text-xl font-semibold">
-          <Users className="mr-3 h-6 w-6 text-accent" />
+        <CardTitle className="flex items-center text-xl font-semibold text-primary">
+          <Users className="mr-3 h-6 w-6 text-primary" />
           Employee Directory
         </CardTitle>
         <CardDescription>Browse company employees and their roles.</CardDescription>
@@ -73,10 +73,10 @@ export function EmployeeDirectory() {
             <Table className="min-w-full">
               <TableHeader className="sticky top-0 bg-card/80 backdrop-blur-sm z-10">
                 <TableRow>
-                  <TableHead className="w-[25%]"><Users className="inline-block mr-2 h-4 w-4 text-accent" />Name</TableHead>
-                  <TableHead className="w-[25%]"><Briefcase className="inline-block mr-2 h-4 w-4 text-accent" />Role</TableHead>
-                  <TableHead className="w-[25%]"><Building className="inline-block mr-2 h-4 w-4 text-accent" />Department</TableHead>
-                  <TableHead className="w-[25%]"><Mail className="inline-block mr-2 h-4 w-4 text-accent" />Email</TableHead>
+                  <TableHead className="w-[25%]"><Users className="inline-block mr-2 h-4 w-4 text-primary" />Name</TableHead>
+                  <TableHead className="w-[25%]"><Briefcase className="inline-block mr-2 h-4 w-4 text-primary" />Role</TableHead>
+                  <TableHead className="w-[25%]"><Building className="inline-block mr-2 h-4 w-4 text-primary" />Department</TableHead>
+                  <TableHead className="w-[25%]"><Mail className="inline-block mr-2 h-4 w-4 text-primary" />Email</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

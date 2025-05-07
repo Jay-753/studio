@@ -21,19 +21,19 @@ export default function ZoroAssistantPage() {
       <AppHeader />
       <main className="flex-grow container mx-auto p-4 md:p-8">
         <Tabs defaultValue="assistant" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 md:w-auto md:inline-flex md:mx-0 mb-6 bg-card border border-border/50 shadow-md rounded-lg p-1">
+          <TabsList className="grid w-full grid-cols-2 md:w-auto md:inline-flex md:mx-0 mb-6 bg-muted border border-border/50 shadow-md rounded-lg p-1">
             <TabsTrigger 
               value="assistant" 
               className="flex-1 md:flex-initial px-4 py-2.5 text-sm font-medium data-[state=active]:bg-accent data-[state=active]:text-accent-foreground data-[state=active]:shadow-lg rounded-md transition-all duration-200 ease-in-out hover:bg-accent/10"
             >
-              <BotMessageSquare className="mr-2 h-5 w-5" />
+              <BotMessageSquare className="mr-2 h-5 w-5 text-primary" />
               Zoro Assistant
             </TabsTrigger>
             <TabsTrigger 
               value="directory" 
               className="flex-1 md:flex-initial px-4 py-2.5 text-sm font-medium data-[state=active]:bg-accent data-[state=active]:text-accent-foreground data-[state=active]:shadow-lg rounded-md transition-all duration-200 ease-in-out hover:bg-accent/10"
             >
-              <Users className="mr-2 h-5 w-5" />
+              <Users className="mr-2 h-5 w-5 text-primary" />
               Employee Directory
             </TabsTrigger>
           </TabsList>

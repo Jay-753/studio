@@ -63,8 +63,8 @@ export function ManualEmailForm() {
   return (
     <Card className="w-full shadow-xl rounded-lg border border-border/50 hover:shadow-2xl hover:scale-[1.01] transition-all duration-300 ease-in-out">
       <CardHeader>
-        <CardTitle className="flex items-center text-xl font-semibold">
-          <Mail className="mr-3 h-6 w-6 text-accent" />
+        <CardTitle className="flex items-center text-xl font-semibold text-primary">
+          <Mail className="mr-3 h-6 w-6 text-primary" />
           Manual Email
         </CardTitle>
         <CardDescription>

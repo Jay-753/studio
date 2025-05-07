@@ -57,8 +57,8 @@ export function VoicePromptForm({ formAction, currentPromptValue }: VoicePromptF
       className="space-y-3"
     >
       <Label htmlFor="prompt" className="sr-only">Your Command</Label>
-      <div className="flex items-center space-x-3 p-3 bg-card rounded-xl shadow-md border border-border/50 hover:shadow-lg transition-shadow duration-300 ease-in-out">
-        <Mic className="h-6 w-6 text-accent flex-shrink-0" />
+      <div className="flex items-center space-x-3 p-3 bg-input rounded-xl shadow-md border border-border hover:shadow-lg transition-shadow duration-300 ease-in-out">
+        <Mic className="h-6 w-6 text-primary flex-shrink-0" />
         <Input
           id="prompt"
           name="prompt"
@@ -66,7 +66,7 @@ export function VoicePromptForm({ formAction, currentPromptValue }: VoicePromptF
           required
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-          className="flex-grow bg-transparent border-0 focus:ring-2 focus:ring-accent/70 focus:border-accent/50 text-base placeholder-muted-foreground h-10"
+          className="flex-grow bg-transparent border-0 focus:ring-0 focus:outline-none text-base placeholder-muted-foreground h-10"
         />
         <SubmitButton />
       </div>

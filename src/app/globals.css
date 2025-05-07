@@ -53,51 +53,51 @@
   }
 
   .dark {
-    /* Dark Theme: "Black - PurpleViolet" */
-    --background: 270 20% 5%; /* Very dark purple, appears almost black */
-    --foreground: 270 50% 90%; /* Light lavender/violet */
+    /* Dark Theme: "Black - PurpleViolet - Teal" based on image */
+    --background: 270 15% 5%; /* Very dark, almost black, slight purple tint */
+    --foreground: 270 20% 90%; /* Light lavender for general text */
 
-    --card: 270 20% 9%; /* Slightly lighter than background, dark purple */
-    --card-foreground: 270 50% 90%;
+    --card: 270 15% 7%; /* Slightly lighter than bg for very subtle lift */
+    --card-foreground: 270 20% 90%;
 
-    --popover: 270 20% 8%; /* Similar to card, dark purple */
-    --popover-foreground: 270 50% 90%;
+    --popover: 270 15% 7%; 
+    --popover-foreground: 270 20% 90%;
 
-    --primary: 271 76% 53%; /* Violet (#8A2BE2) - strong purpleviolet */
-    --primary-foreground: 0 0% 100%; /* White */
+    --primary: 275 70% 70%; /* Vibrant Purple for logo, main icons, titles */
+    --primary-foreground: 270 100% 98%; /* White text for primary elements if needed */
 
-    --secondary: 270 30% 30%; /* Muted darker purple */
-    --secondary-foreground: 270 40% 85%; /* Lighter purple for secondary text */
+    --secondary: 270 20% 20%; /* Muted darker purple */
+    --secondary-foreground: 270 20% 70%; /* Lighter purple for secondary text */
 
-    --muted: 270 20% 20%; /* Dark, desaturated purple for muted elements */
-    --muted-foreground: 270 30% 70%; /* Lighter muted purple for muted text */
+    --muted: 270 15% 12%; /* Dark, desaturated purple for muted elements (e.g. TabList bg) */
+    --muted-foreground: 270 10% 60%; /* Greyer/less saturated purple for muted text (placeholders) */
 
-    --accent: 271 70% 65%; /* Vibrant, slightly lighter purple than primary */
-    --accent-foreground: 0 0% 100%; /* White */
+    --accent: 180 70% 48%; /* Teal for buttons (Send), active tabs */
+    --accent-foreground: 270 100% 98%; /* White text for teal buttons */
 
-    --destructive: 0 62.8% 30.6%; /* Keeping a standard destructive red */
+    --destructive: 0 70% 55%; 
     --destructive-foreground: 0 0% 98%;
 
-    --border: 270 20% 25%; /* Subtle dark purple border */
-    --input: 270 20% 10%; /* Dark purple input background */
-    --ring: 271 70% 65%; /* Matches new accent for focus rings */
+    --border: 270 10% 18%; /* Subtle dark purple border */
+    --input: 270 10% 10%; /* Distinct dark background for input fields */
+    --ring: 180 70% 48%; /* Teal focus ring */
 
     /* Chart colors for dark theme, purple-based */
-    --chart-1: 271 70% 50%;
-    --chart-2: 271 60% 60%;
-    --chart-3: 271 50% 70%;
-    --chart-4: 271 80% 55%;
-    --chart-5: 271 75% 65%;
+    --chart-1: 275 70% 50%;
+    --chart-2: 275 60% 60%;
+    --chart-3: 275 50% 70%;
+    --chart-4: 275 80% 55%;
+    --chart-5: 275 75% 65%;
 
     /* Dark Theme Sidebar */
-    --sidebar-background: 270 20% 7%; /* Consistent dark purple for sidebar */
-    --sidebar-foreground: 270 50% 90%;
-    --sidebar-primary: 271 70% 65%; /* Matches new accent */
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 271 76% 53%; /* Matches new primary (Violet) */
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 270 20% 18%;
-    --sidebar-ring: 271 70% 65%; /* Matches new accent */
+    --sidebar-background: 270 15% 6%; 
+    --sidebar-foreground: 270 20% 90%;
+    --sidebar-primary: 275 70% 70%; 
+    --sidebar-primary-foreground: 270 100% 98%;
+    --sidebar-accent: 180 70% 48%; 
+    --sidebar-accent-foreground: 270 100% 98%;
+    --sidebar-border: 270 10% 15%;
+    --sidebar-ring: 180 70% 48%;
   }
 }
 
