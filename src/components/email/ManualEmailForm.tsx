@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import { Mail, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -11,14 +11,17 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { sendManualEmailAction, type SendManualEmailResult } from '@/app/actions';
 import { useToast } from '@/hooks/use-toast';
 import { LoadingDots } from '@/components/ui/LoadingDots';
-import { useEffect } from 'react';
 
 const initialManualEmailState: SendManualEmailResult | null = null;
 
 function ManualSubmitButton() {
   const { pending } = useFormStatus();
   return (
-    <Button type="submit" disabled={pending} className="w-full md:w-auto bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-300 hover:shadow-lg transform hover:scale-105 active:scale-95">
+    <Button 
+      type="submit" 
+      disabled={pending} 
+      className="w-full md:w-auto bg-accent hover:bg-accent/90 text-accent-foreground transition-all duration-300 hover:shadow-lg transform hover:scale-105 active:scale-95"
+    >
       {pending ? (
         <>
           <LoadingDots className="mr-2" />
@@ -58,7 +61,7 @@ export function ManualEmailForm() {
   }, [state, toast]);
 
   return (
-    <Card className="w-full shadow-xl rounded-lg border border-border/50">
+    <Card className="w-full shadow-xl rounded-lg border border-border/50 hover:shadow-2xl hover:scale-[1.01] transition-all duration-300 ease-in-out">
       <CardHeader>
         <CardTitle className="flex items-center text-xl font-semibold">
           <Mail className="mr-3 h-6 w-6 text-accent" />
@@ -78,7 +81,7 @@ export function ManualEmailForm() {
               type="email"
               placeholder="recipient@example.com"
               required
-              className="text-base bg-input border-border/70 focus:border-primary focus:ring-primary"
+              className="text-base bg-input border-border/70 focus:border-accent/70 focus:ring-2 focus:ring-accent/70"
             />
           </div>
           <div className="space-y-1.5">
@@ -88,7 +91,7 @@ export function ManualEmailForm() {
               name="subject"
               placeholder="Email Subject"
               required
-              className="text-base bg-input border-border/70 focus:border-primary focus:ring-primary"
+              className="text-base bg-input border-border/70 focus:border-accent/70 focus:ring-2 focus:ring-accent/70"
             />
           </div>
           <div className="space-y-1.5">
@@ -99,7 +102,7 @@ export function ManualEmailForm() {
               placeholder="Compose your email..."
               rows={5}
               required
-              className="text-base bg-input border-border/70 focus:border-primary focus:ring-primary"
+              className="text-base bg-input border-border/70 focus:border-accent/70 focus:ring-2 focus:ring-accent/70"
             />
           </div>
         </CardContent>

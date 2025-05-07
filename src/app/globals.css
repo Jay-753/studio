@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    /* These are fallback light theme variables, but the app will default to dark mode. */
+    /* Fallback light theme variables, dark mode is default */
     --background: 240 67% 94%; 
     --foreground: 271 60% 25%;
 
@@ -14,7 +14,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 271 60% 25%;
 
-    --primary: 180 65% 55%; /* Teal */
+    --primary: 180 65% 45%; /* Darker Teal */
     --primary-foreground: 0 0% 100%; /* White */
 
     --secondary: 270 40% 80%; 
@@ -31,7 +31,7 @@
 
     --border: 270 50% 85%;
     --input: 0 0% 100%; 
-    --ring: 180 65% 55%; /* Teal for focus rings */
+    --ring: 264 70% 70%; /* Purple for focus rings, matches accent */
 
     --radius: 0.5rem;
 
@@ -61,7 +61,7 @@
     --popover: 264 30% 12%;
     --popover-foreground: 255 50% 90%;
 
-    --primary: 180 65% 55%; /* Teal */
+    --primary: 180 65% 45%; /* Darker Teal */
     --primary-foreground: 0 0% 100%; /* White */
 
     --secondary: 264 40% 35%; /* Muted Deeper Purple */
@@ -78,7 +78,7 @@
 
     --border: 264 30% 25%; 
     --input: 264 30% 12%; /* Input background, similar to popover */
-    --ring: 180 65% 55%; /* Teal */
+    --ring: 264 70% 70%; /* Purple for focus rings, matches accent */
 
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
@@ -90,10 +90,10 @@
     --sidebar-foreground: 255 50% 90%;
     --sidebar-primary: 264 70% 70%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 180 65% 55%;
+    --sidebar-accent: 180 65% 45%; /* Darker Teal */
     --sidebar-accent-foreground: 0 0% 100%;
     --sidebar-border: 264 30% 20%;
-    --sidebar-ring: 180 65% 55%;
+    --sidebar-ring: 264 70% 70%; /* Purple */
   }
 }
 
