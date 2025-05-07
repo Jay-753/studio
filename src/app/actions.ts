@@ -116,3 +116,4 @@ export async function sendManualEmailAction(
     return { success: false, message: `Failed to send email: ${errorMessage}` };
   }
 }
+

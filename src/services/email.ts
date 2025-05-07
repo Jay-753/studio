@@ -48,7 +48,7 @@ export async function getEmployees(): Promise<Employee[]> {
   // TODO: Implement this by fetching employee data from a database or other source.
   return [
     {
-      name: 'John Smith',
+      name: 'JayJay',
       email: 'nezukodvl@gmail.com',
       role: 'Manager',
       department: 'Engineering',
@@ -84,14 +84,14 @@ export async function getEmployees(): Promise<Employee[]> {
       department: 'Sales',
     },
     {
-      name: 'Frank Wilson',
-      email: 'frank.wilson@example.com',
+      name: 'Jayshu',
+      email: 'jayashreejananis@gmail.com',
       role: 'Team Lead',
       department: 'Sales',
     },
     {
-      name: 'Grace Taylor',
-      email: 'grace.taylor@example.com',
+      name: 'Jay',
+      email: 'shreejayalakshmis@gmail.com',
       role: 'Project Manager',
       department: 'Product Management',
     },
