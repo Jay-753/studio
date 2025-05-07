@@ -49,7 +49,7 @@ export async function getEmployees(): Promise<Employee[]> {
   return [
     {
       name: 'John Smith',
-      email: 'john.smith@example.com',
+      email: 'nezukodvl@gmail.com',
       role: 'Manager',
       department: 'Engineering',
     },
@@ -139,3 +139,4 @@ export async function getEmployees(): Promise<Employee[]> {
     },
   ];
 }
+
