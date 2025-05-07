@@ -50,7 +50,7 @@ The user will provide a voice prompt. Your tasks are:
     - Optionally, include a brief, polite opening phrase (e.g., "I hope this email finds you well." or "This is a quick follow-up regarding...").
     - Clearly and politely state the user's request or instruction derived from the voice prompt. Expand the core task into a full sentence or two, providing necessary context if inferable or keeping it direct if the prompt is simple. For instance, if the core task is "submit project files", the email might state: "This email is to kindly request the submission of the project files at your earliest convenience."
     - If the user's voice prompt implied urgency or a deadline, ensure this is politely conveyed in the email body.
-    - Conclude with a professional closing statement (e.g., "Thank you for your time and attention to this matter.", "Your prompt attention to this would be greatly appreciated.").
+    - Conclude with a professional closing statement (e.g., "Thank you for your time and attention to this matter.").
     - End with the signature: "Best regards,\\nZoro Assistant".
     - Use newline characters (\\n) for line breaks to ensure readability (e.g., after salutation, between paragraphs, before the closing statement, and before the signature).
 
@@ -63,7 +63,7 @@ Voice Prompt: "Ask the manager to submit the project files"
 Output:
 - role: "manager"
 - coreMessage: "submit project files"
-- emailBody: "Dear Manager,\\n\\nI hope this email finds you well.\\n\\nThis email is to kindly request the submission of the project files at your earliest convenience.\\n\\nYour prompt attention to this matter would be greatly appreciated.\\n\\nBest regards,\\nZoro Assistant"
+- emailBody: "Dear Manager,\\n\\nI hope this email finds you well.\\n\\nThis email is to kindly request the submission of the project files at your earliest convenience.\\n\\nThank you for your attention to this matter.\\n\\nBest regards,\\nZoro Assistant"
 
 Example 2:
 Voice Prompt: "Tell all developers to update their SDKs, it's urgent"
